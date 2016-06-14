@@ -1,0 +1,21 @@
+body {
+    font-family: "Lato", sans-serif;
+    color: #D9CCC3;
+;
+
+}
+.container{
+        background-color: #598059;
+    
+}
+
+#map {
+    width: 765px;
+    height:765px;
+    background-color: #666699;
+/*    display: bl;*/
+
+
+}
+
+}
