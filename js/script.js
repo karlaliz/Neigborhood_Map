@@ -6,7 +6,7 @@ var elements = [
     web: "http://www.neaq.org"
     },
     {
-    name: "The Institute of Contemporary Art/Boston",
+    name: "Institute of Contemporary Art, Boston",
     lat: 42.352938,  
     lng:-71.043213,
     web: "https://www.icaboston.org"
@@ -30,10 +30,10 @@ var elements = [
     web: "http://www.mit.edu"
     },
     {
-    name: "Boston Public Garden",
+    name: "Public Garden (Boston)",
     lat: 42.354041,  
     lng:-71.070278,
-    web: ""
+    web: "http://www.cityofboston.gov/parks/emerald/Public_Garden.asp"
     },
        {
     name: "Bunker Hill Monument",
@@ -44,58 +44,59 @@ var elements = [
 ]
 
 var map=0;
-var marker =0;
 function initMap() {
+
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 42.3601868, lng: -71.0768508},
         zoom: 13
     });
-    var contentString = '<div id="content">'+
-    '<div id="siteNotice">'+
-    '</div>'+
-    '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
-    '<div id="bodyContent">'+
-    '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-    'sandstone rock formation in the southern part of the '+
-    'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
-    'south west of the nearest large town, Alice Springs; 450&#160;km '+
-    '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
-    'features of the Uluru - Kata Tjuta National Park. Uluru is '+
-    'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
-    'Aboriginal people of the area. It has many springs, waterholes, '+
-    'rock caves and ancient paintings. Uluru is listed as a World '+
-    'Heritage Site.</p>'+
-    '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
-    'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
-    '(last visited June 22, 2009).</p>'+
-    '</div>'+
-    '</div>';
-    var infowindow = new google.maps.InfoWindow({
-        content: contentString
-    });
+
     for (var i = 0; i < elements.length; i++) {
         var e = elements[i];
-        marker = new google.maps.Marker({
+
+
+        var marker = new google.maps.Marker({
             position: {lat: e.lat, lng:e.lng},
             map: map,
-            title: e.name
+            title: e.name,
+            web: e.web
         });
-    marker.addListener('click', function() {
-        infowindow.open(map, marker);
-    });
 
+        attachContent(marker);
 
-        // marker.addListener('click', toggleBounce);
-
-
-        // function toggleBounce() {
-        //     if (marker.getAnimation() !== null) {
-        //         marker.setAnimation(null);
-        //     } else {
-        //         marker.setAnimation(google.maps.Animation.BOUNCE);
-        // }
-    };
+    }
+    
 };
+
+function attachContent(marker) {
+    var contentString = '<div id="content">'+
+    '<h1 id="firstHeading" class="firstHeading">'+ marker.title + '</h1>'+
+    '<p><a href="'+marker.web+'">'+
+     marker.title + '</a>'
+    '</p>'+
+    '</div>';
+
+    marker.addListener('click', function() {
+
+        // ajax
+        var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' +marker.title+ '&format=json&callback=wikiCallback';
+        $.ajax({
+            url: wikiUrl,
+            dataType: "jsonp",
+
+            success: function (response) {
+                var articleList = response[1];
+                console.log('<p>' + response[2] + '</p>')
+                var infowindow = new google.maps.InfoWindow({
+                    content: '' + response[2]
+                });
+                infowindow.open(map, marker);
+            }
+        })    
+
+
+    });    
+}
 
 function ListPlaces (bostonPlace) {
     var self = this;
