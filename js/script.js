@@ -68,13 +68,19 @@ function initMap() {
     
 };
 
+function makeContentString(marker, wikiContent) {
+
+    var contentString = 
+        '<div id="content">' +
+        '<h1 id="firstHeading" class="firstHeading">'+ marker.title + '</h1>'+
+        '<p>' + wikiContent + '</p>' +
+        '<p><a href="'+marker.web+'" target="_blank">'+ marker.title + '</a>' +
+        '</p>'+
+        '</div>';
+    return contentString
+}
+
 function attachContent(marker) {
-    var contentString = '<div id="content">'+
-    '<h1 id="firstHeading" class="firstHeading">'+ marker.title + '</h1>'+
-    '<p><a href="'+marker.web+'">'+
-     marker.title + '</a>'
-    '</p>'+
-    '</div>';
 
     marker.addListener('click', function() {
 
@@ -86,15 +92,12 @@ function attachContent(marker) {
 
             success: function (response) {
                 var articleList = response[1];
-                console.log('<p>' + response[2] + '</p>')
-                var infowindow = new google.maps.InfoWindow({
-                    content: '' + response[2]
-                });
+                var contentString = makeContentString(marker, response[2]);
+                var infowindow = new google.maps.InfoWindow();
+                infowindow.setContent(contentString);
                 infowindow.open(map, marker);
             }
         })    
-
-
     });    
 }
 
