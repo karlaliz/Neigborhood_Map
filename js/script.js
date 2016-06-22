@@ -64,8 +64,11 @@ function initMap() {
 
         attachContent(marker);
 
+        e["marker"] = marker;
+
     }
     
+    ko.applyBindings(new PlacesViewModel());
 };
 
 function makeContentString(marker, wikiContent) {
@@ -103,18 +106,30 @@ function attachContent(marker) {
 
 function ListPlaces (bostonPlace) {
     var self = this;
-    self.name= ko.observable(bostonPlace);
+    self.name = ko.observable(bostonPlace);
 }
+
 function PlacesViewModel() {
     var self = this;
 
-    var array = [];
-    for (var i = 0; i < elements.length; i++) {
-        var e = elements[i];
-        array.push(new ListPlaces(e.name));
+    function searchFilter (searchstr) {
+        searchstr = searchstr.toLowerCase();
+        var array = [];
+        for (var i = 0; i < elements.length; i++) {
+            var e = elements[i];
+            if (e.name.toLowerCase().includes(searchstr)) {
+                array.push(new ListPlaces(e.name)); 
+                e["marker"].setVisible(true);
+            }
+            else {
+                e["marker"].setVisible(false);
+            }
+        }
+        self.places(array);
+    } 
 
-    }
-    self.places= ko.observableArray(array);
+    self.places = ko.observableArray([]);
+    self.saved_value = ko.observable("");
+    self.saved_value.subscribe( searchFilter );
+    searchFilter("");
 }
-
-ko.applyBindings(new PlacesViewModel());

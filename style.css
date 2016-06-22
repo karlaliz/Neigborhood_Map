@@ -1,7 +1,7 @@
 body {
     font-family: "Lato", sans-serif;
     color: #D9CCC3;
-;
+
 
 }
 .container{
@@ -9,13 +9,26 @@ body {
     
 }
 
+#title{
+    color: #CFE6E6;
+}
+
 #map {
     width: 765px;
     height:765px;
     background-color: #666699;
-/*    display: bl;*/
+}
 
+#filter{
+    color: black;  
+}
 
+#firstHeading{
+    color: #60BFBF; 
+}
+
+#content{
+    color: black;  
 }
 
 }

@@ -13,16 +13,17 @@
     <div class="container">
       <div class="row title">
         <div class="col-md-12 ">
-          <h1 class="text-right text-uppercase">Places to visit in Boston</h1>
+          <h1 id="title" class="text-right text-uppercase">Places to visit in Boston</h1>
         </div>
       </div> 
       <div class="row">
         <div class="col-md-4 ">
+          <input data-bind="textInput: saved_value" id="filter"/>
           <ul data-bind="foreach: places">
             <li data-bind="text: name()"></li>
         </div>      
         <div class="col-md-8 img-responsive">
-          <div id="map"></div>
+          <div id="map"></d
         </div>
       </div>  
 
