@@ -1,35 +1,38 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>Neighborhood Map</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
-    <script type='text/javascript' src='js/knockout-3.4.0.js'></script>
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  </head>
-  <body>
-    <div class="container">
-      <div class="row title">
-        <div class="col-md-12 ">
-          <h1 id="title" class="text-right text-uppercase">Places to visit in Boston</h1>
-        </div>
-      </div> 
-      <div class="row">
-        <div class="col-md-4 ">
-          <input data-bind="textInput: saved_value" id="filter"/>
-          <ul data-bind="foreach: places">
-            <li data-bind="text: name()"></li>
-        </div>      
-        <div class="col-md-8 img-responsive">
-          <div id="map"></d
-        </div>
-      </div>  
+    <script async type='text/javascript' src='js/knockout-3.4.0.js'></script>
+    <script async src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</head>
 
+<body>
+    <div class="container">
+        <div class="row title">
+            <div class="col-md-12 ">
+                <h1 id="title" class="text-right text-uppercase">Places to visit in Boston</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 ">
+                <input data-bind="textInput: saved_value" id="filter" />
+                <ul data-bind="foreach: places">
+                    <li data-bind="text: name()"></li>
+            </div>
+            <div class="col-md-8 img-responsive">
+                <div id="map">
+                </div>
+            </div>
+        </div>
     </div>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAI9ebuCtlXfS6wS7ZL6nHiZYAWX5ACRkU&callback=initMap">
     </script>
-    <script src="js/script.js"></script>
-  </body>
+    <script async src="js/script.js"></script>
+</body>
+
 </html>

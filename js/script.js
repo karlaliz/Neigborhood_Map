@@ -1,3 +1,4 @@
+// Model 
 var elements = [
     {
     name: "New England Aquarium",
@@ -41,8 +42,9 @@ var elements = [
     lng:-71.062965,
     web: "http://www.nps.gov"
     }
-]
+];
 
+// Initialize maps
 var map=0;
 function initMap() {
 
@@ -63,13 +65,13 @@ function initMap() {
         });
 
         attachContent(marker);
-
-        e["marker"] = marker;
+        // Storage the marker in the list of elements
+        e.marker = marker; 
 
     }
-    
+    // When the map is loaded call the funcion of observables
     ko.applyBindings(new PlacesViewModel());
-};
+}
 
 function makeContentString(marker, wikiContent) {
 
@@ -80,14 +82,14 @@ function makeContentString(marker, wikiContent) {
         '<p><a href="'+marker.web+'" target="_blank">'+ marker.title + '</a>' +
         '</p>'+
         '</div>';
-    return contentString
+    return contentString;
 }
 
 function attachContent(marker) {
 
     marker.addListener('click', function() {
 
-        // ajax
+        // ajax Wikipedia API
         var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' +marker.title+ '&format=json&callback=wikiCallback';
         $.ajax({
             url: wikiUrl,
@@ -100,7 +102,7 @@ function attachContent(marker) {
                 infowindow.setContent(contentString);
                 infowindow.open(map, marker);
             }
-        })    
+        });    
     });    
 }
 
@@ -113,16 +115,17 @@ function PlacesViewModel() {
     var self = this;
 
     function searchFilter (searchstr) {
+        // Make the filter
         searchstr = searchstr.toLowerCase();
         var array = [];
         for (var i = 0; i < elements.length; i++) {
             var e = elements[i];
             if (e.name.toLowerCase().includes(searchstr)) {
                 array.push(new ListPlaces(e.name)); 
-                e["marker"].setVisible(true);
+                e.marker.setVisible(true);
             }
             else {
-                e["marker"].setVisible(false);
+                e.marker.setVisible(false);
             }
         }
         self.places(array);
