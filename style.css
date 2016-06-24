@@ -1,7 +1,10 @@
 body {
     font-family: "Lato", sans-serif;
     color: #D9CCC3;
-
+    
+li {
+    cursor: pointer;
+}
 
 }
 .container{
@@ -14,8 +17,8 @@ body {
 }
 
 #map {
-    width: 765px;
-    height:765px;
+    width: 95%;
+    height:100vh;
     background-color: #666699;
 }
 

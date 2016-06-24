@@ -45,14 +45,15 @@ var elements = [
 ];
 
 // Initialize maps
+var infowindow;
 var map=0;
 function initMap() {
 
     map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 42.3601868, lng: -71.0768508},
-        zoom: 13
+        center: {lat: 42.3551993, lng: -71.068718},
+        zoom: 14
     });
-
+    infowindow = new google.maps.InfoWindow();
     for (var i = 0; i < elements.length; i++) {
         var e = elements[i];
 
@@ -61,7 +62,7 @@ function initMap() {
             position: {lat: e.lat, lng:e.lng},
             map: map,
             title: e.name,
-            web: e.web
+            web: e.web        
         });
 
         attachContent(marker);
@@ -98,7 +99,6 @@ function attachContent(marker) {
             success: function (response) {
                 var articleList = response[1];
                 var contentString = makeContentString(marker, response[2]);
-                var infowindow = new google.maps.InfoWindow();
                 infowindow.setContent(contentString);
                 infowindow.open(map, marker);
             }

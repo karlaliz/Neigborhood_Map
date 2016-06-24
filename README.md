@@ -4,7 +4,7 @@ Neighborhood Map
 Instructions to open the map
 ---------------------------
 
-In order to open the the map,  first discharge the file and  then open the index in your local browser.
+In order to open the the map,  first downland the file and  then open the index in your local browser.
 
 How to use the map
 ---------------------------
