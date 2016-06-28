@@ -22,7 +22,7 @@
             <div class="col-md-4 ">
                 <input data-bind="textInput: saved_value" id="filter" />
                 <ul data-bind="foreach: places">
-                    <li data-bind="text: name()"></li>
+                    <li class="list" data-bind="text: name, click: $parent.placeClick"></li>
                 </ul>
             </div>
             <div class="col-md-8 img-responsive">
@@ -32,7 +32,7 @@
         </div>
     </div>
     <script src="js/script.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAI9ebuCtlXfS6wS7ZL6nHiZYAWX5ACRkU&callback=initMap">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAI9ebuCtlXfS6wS7ZL6nHiZYAWX5ACRkU&callback=initMap" oneerror="googleError()">
     </script>
     
 </body>

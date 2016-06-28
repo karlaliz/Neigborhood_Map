@@ -40,13 +40,12 @@ var elements = [
     name: "Bunker Hill Monument",
     lat: 42.376358, 
     lng:-71.062965,
-    web: "http://www.nps.gov"
+    web: "https://www.nps.gov/bost/learn/historyculture/bhm.htm"
     }
 ];
 
 // Initialize maps
-var infowindow;
-var map=0;
+var infowindow, map, marker;
 function initMap() {
 
     map = new google.maps.Map(document.getElementById('map'), {
@@ -58,12 +57,14 @@ function initMap() {
         var e = elements[i];
 
 
-        var marker = new google.maps.Marker({
+        marker = new google.maps.Marker({
             position: {lat: e.lat, lng:e.lng},
             map: map,
             title: e.name,
             web: e.web        
+        
         });
+
 
         attachContent(marker);
         // Storage the marker in the list of elements
@@ -72,7 +73,9 @@ function initMap() {
     }
     // When the map is loaded call the funcion of observables
     ko.applyBindings(new PlacesViewModel());
+    
 }
+
 
 function makeContentString(marker, wikiContent) {
 
@@ -90,6 +93,9 @@ function attachContent(marker) {
 
     marker.addListener('click', function() {
 
+    //     var wikiRequestTimeout = setTimeout(function() {
+    //         infowindow.setContent("Failed to get wikipedia resources");
+    // }, 8000);
         // ajax Wikipedia API
         var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' +marker.title+ '&format=json&callback=wikiCallback';
         $.ajax({
@@ -101,6 +107,7 @@ function attachContent(marker) {
                 var contentString = makeContentString(marker, response[2]);
                 infowindow.setContent(contentString);
                 infowindow.open(map, marker);
+                // clearTimeout(wikiRequestTimeout); 
             }
         });    
     });    
@@ -121,7 +128,7 @@ function PlacesViewModel() {
         for (var i = 0; i < elements.length; i++) {
             var e = elements[i];
             if (e.name.toLowerCase().includes(searchstr)) {
-                array.push(new ListPlaces(e.name)); 
+                array.push(e); 
                 e.marker.setVisible(true);
             }
             else {
@@ -129,10 +136,19 @@ function PlacesViewModel() {
             }
         }
         self.places(array);
+    }
+    self.placeClick = function(place) {
+        google.maps.event.trigger(place.marker, 'click');
     } 
+
 
     self.places = ko.observableArray([]);
     self.saved_value = ko.observable("");
     self.saved_value.subscribe( searchFilter );
     searchFilter("");
+
+}
+function googleError() {
+    alert("Google Map Has Encountered An Error");
+    
 }

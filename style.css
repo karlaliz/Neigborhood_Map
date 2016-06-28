@@ -2,17 +2,21 @@ body {
     font-family: "Lato", sans-serif;
     color: #D9CCC3;
     
+}
+
 li {
     cursor: pointer;
 }
 
+.list {
+    cursor: pointer;
 }
-.container{
+.container {
         background-color: #598059;
     
 }
 
-#title{
+#title {
     color: #CFE6E6;
 }
 
@@ -22,15 +26,15 @@ li {
     background-color: #666699;
 }
 
-#filter{
+#filter {
     color: black;  
 }
 
-#firstHeading{
+#firstHeading {
     color: #60BFBF; 
 }
 
-#content{
+#content {
     color: black;  
 }
 
