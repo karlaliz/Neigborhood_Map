@@ -91,12 +91,20 @@ function makeContentString(marker, wikiContent) {
 
 function attachContent(marker) {
 
+    marker.addListener('click', toggleBounce);
+        function toggleBounce() {
+            if (marker.getAnimation() !== null) {
+                marker.setAnimation(null);
+            } else {
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+                setTimeout(function () {
+                    place.marker.setAnimation(null);
+                }, 1000);
+            }
+        }
+
     marker.addListener('click', function() {
 
-    //     var wikiRequestTimeout = setTimeout(function() {
-    //         infowindow.setContent("Failed to get wikipedia resources");
-    // }, 8000);
-        // ajax Wikipedia API
         var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' +marker.title+ '&format=json&callback=wikiCallback';
         $.ajax({
             url: wikiUrl,
@@ -106,8 +114,17 @@ function attachContent(marker) {
                 var articleList = response[1];
                 var contentString = makeContentString(marker, response[2]);
                 infowindow.setContent(contentString);
+                if (articleList.length ==0){
+                        var content = '<div id="content">' +
+                        '<h1 id="firstHeading" class="firstHeading">'+ marker.title + '</h1>'+
+                        '<p>' + "Failed to find Wikipedia information" + '</p>' +
+                        '<p><a href="'+marker.web+'" target="_blank">'+ marker.title + '</a>' +
+                        '</p>'+
+                        '</div>';
+                        infowindow.setContent(content);
+                }
                 infowindow.open(map, marker);
-                // clearTimeout(wikiRequestTimeout); 
+                
             }
         });    
     });    
@@ -148,7 +165,7 @@ function PlacesViewModel() {
     searchFilter("");
 
 }
+
 function googleError() {
-    alert("Google Map Has Encountered An Error");
-    
+    alert("Google Has Encountered An Error");
 }
