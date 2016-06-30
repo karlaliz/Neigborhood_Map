@@ -93,28 +93,23 @@ function attachContent(marker) {
 
     marker.addListener('click', toggleBounce);
         function toggleBounce() {
-            if (marker.getAnimation() !== null) {
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+            setTimeout(function () {
                 marker.setAnimation(null);
-            } else {
-                marker.setAnimation(google.maps.Animation.BOUNCE);
-                setTimeout(function () {
-                    place.marker.setAnimation(null);
-                }, 1000);
-            }
+            }, 2100);
         }
 
     marker.addListener('click', function() {
-
         var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' +marker.title+ '&format=json&callback=wikiCallback';
         $.ajax({
             url: wikiUrl,
             dataType: "jsonp",
 
-            success: function (response) {
+            }).done(function (response) {
                 var articleList = response[1];
                 var contentString = makeContentString(marker, response[2]);
                 infowindow.setContent(contentString);
-                if (articleList.length ==0){
+                if (articleList.length ===0){
                         var content = '<div id="content">' +
                         '<h1 id="firstHeading" class="firstHeading">'+ marker.title + '</h1>'+
                         '<p>' + "Failed to find Wikipedia information" + '</p>' +
@@ -124,9 +119,15 @@ function attachContent(marker) {
                         infowindow.setContent(content);
                 }
                 infowindow.open(map, marker);
+                setTimeout(function () {
+                    infowindow.open(null);
+                }, 4200);
+
                 
-            }
-        });    
+            }).fail(function () {
+                alert('ERROR: Failed to load data');
+            });
+            
     });    
 }
 
@@ -156,16 +157,16 @@ function PlacesViewModel() {
     }
     self.placeClick = function(place) {
         google.maps.event.trigger(place.marker, 'click');
-    } 
+    }; 
 
 
     self.places = ko.observableArray([]);
-    self.saved_value = ko.observable("");
-    self.saved_value.subscribe( searchFilter );
-    searchFilter("");
+    self.savedValue = ko.observable('');
+    self.savedValue.subscribe( searchFilter );
+    searchFilter('');
 
 }
 
 function googleError() {
-    alert("Google Has Encountered An Error");
+    alert('Google Has Encountered An Error');
 }

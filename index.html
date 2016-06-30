@@ -6,9 +6,7 @@
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <script async type='text/javascript' src='js/knockout-3.4.0.js'></script>
-    <script async src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
 <body>
@@ -20,7 +18,7 @@
         </div>
         <div class="row">
             <div class="col-md-4 ">
-                <input data-bind="textInput: saved_value" id="filter" />
+                <input data-bind="textInput: savedValue" id="filter" />
                 <ul data-bind="foreach: places">
                     <li class="list" data-bind="text: name, click: $parent.placeClick"></li>
                 </ul>
@@ -31,6 +29,8 @@
             </div>
         </div>
     </div>
+    <script src='js/knockout-3.4.0.js'></script>
+    <script   src="https://code.jquery.com/jquery-3.0.0.min.js"   integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0="   crossorigin="anonymous"></script>
     <script src="js/script.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAI9ebuCtlXfS6wS7ZL6nHiZYAWX5ACRkU&callback=initMap" onerror="googleError()">
     </script>
