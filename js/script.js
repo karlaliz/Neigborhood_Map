@@ -50,9 +50,10 @@ function initMap() {
 
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 42.3551993, lng: -71.068718},
-        zoom: 14
+        zoom: 1
     });
     infowindow = new google.maps.InfoWindow();
+    var bounds = new google.maps.LatLngBounds();
     for (var i = 0; i < elements.length; i++) {
         var e = elements[i];
 
@@ -70,7 +71,12 @@ function initMap() {
         // Storage the marker in the list of elements
         e.marker = marker; 
 
+        bounds.extend(marker.getPosition());
+
     }
+
+    map.fitBounds(bounds);
+
     // When the map is loaded call the funcion of observables
     ko.applyBindings(new PlacesViewModel());
     
