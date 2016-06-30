@@ -1,0 +1,55 @@
+body {
+font-family : "Lato", sans-serif;
+color : #d9ccc3;
+
+}
+
+
+li {
+cursor : pointer;
+
+}
+
+
+.list {
+cursor : pointer;
+
+}
+
+
+.container {
+background-color : #598059;
+
+}
+
+
+#title {
+color : #cfe6e6;
+
+}
+
+
+#map {
+width : 95%;
+height : 100vh;
+background-color : #666699;
+
+}
+
+
+#filter {
+color : black;
+
+}
+
+
+#firstHeading {
+color : #60bfbf;
+
+}
+
+
+#content {
+color : black;
+
+}
